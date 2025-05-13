@@ -72,6 +72,23 @@ export const gridItems = [
 export const projects = [
   {
     id: 1,
+    title: "A&D Technology",
+    des: "A&D Technology is a technology company that provides technology solutions to businesses.",
+    img: "/adtc.png",
+    iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/next.svg"],
+    link: "https://a-d-t-c.com/",
+  },
+
+  {
+    id: 2,
+    title: "Buzzy Ecommerce website",
+    des: "Welcome to buzzy where every interaction is an opportunity",
+    img: "/buzz.png",
+    iconLists: ["/re.svg", "/tail.svg", "/ts.svg"],
+    link: "https://buzzy.ng/",
+  },
+  {
+    id: 3,
     title: "Coffee Landing Page",
     des: "3D Landing page concept design for Coffee business",
     img: "/coffeimg.png",
@@ -79,7 +96,7 @@ export const projects = [
     link: "https://cffesite.netlify.app/",
   },
   {
-    id: 2,
+    id: 4,
     title: "Airpods Landing Page",
     des: "Landing page concept design for Airpods",
     img: "/podsimg.png",
@@ -88,15 +105,7 @@ export const projects = [
   },
 
   {
-    id: 3,
-    title: "Buzzy Ecommerce website",
-    des: "Welcome to buzzy where every interaction is an opportunity",
-    img: "/buzz.png",
-    iconLists: ["/re.svg", "/tail.svg", "/ts.svg"],
-    link: "https://buzzy.ng/",
-  },
-  {
-    id: 4,
+    id: 5,
     title: "Winter Collecion Landing Page",
     des: "Landing page concept for winter collection Ecommerce website",
     img: "/winimg.png",
@@ -174,8 +183,8 @@ export const companies = [
 export const workExperience = [
   {
     id: 1,
-    title: "Frontend Engineer",
-    desc: "Assisted in the development of a web-based platform using React.js, enhancing interactivity.",
+    title: "Fullstack Developer",
+    desc: "Assisted in the development of a web-based platform using React.js, php, typescript, enhancing interactivity.",
     className: "md:col-span-2",
     thumbnail: "/exp1.svg",
   },
