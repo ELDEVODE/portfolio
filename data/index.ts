@@ -188,7 +188,7 @@ export const workExperience = [
     className: "md:col-span-2",
     thumbnail: "/exp1.svg",
   },
-  {
+  { 
     id: 2,
     title: "Rust developer",
     desc: "Designed and developed backend systems for a blockchain application using Rust.",
