@@ -7,35 +7,36 @@ import { PinContainer } from "./ui/Pin";
 
 const RecentProjects = () => {
   return (
-    <div className="py-20">
-      <h1 className="heading">
+    <section id="projects" className="py-20" aria-labelledby="projects-heading">
+      <h2 id="projects-heading" className="heading">
         A small selection of{" "}
         <span className="text-purple">recent projects</span>
-      </h1>
+      </h2>
       <div className="flex flex-wrap items-center justify-center p-4 gap-16 mt-10">
         {projects.map((item) => (
           <div
             className="lg:min-h-[32.5rem] h-[25rem] flex items-center justify-center sm:w-96 w-[80vw]"
             key={item.id}
           >
-            <PinContainer title="" href="">
+            <PinContainer title={item.title} href={item.link}>
               <div className="relative flex items-center justify-center sm:w-96 w-[80vw] overflow-hidden h-[20vh] lg:h-[30vh] mb-10">
                 <div
                   className="relative w-full h-full overflow-hidden lg:rounded-3xl"
                   style={{ backgroundColor: "#13162D" }}
+                  aria-hidden="true"
                 >
-                  <img src="/bg.png" alt="bgimg" />
+                  <img src="/bg.png" alt="" role="presentation" />
                 </div>
                 <img
                   src={item.img}
-                  alt="cover"
+                  alt={`Screenshot of ${item.title} project`}
                   className="z-10 absolute bottom-0"
                 />
               </div>
 
-              <h1 className="font-bold lg:text-2xl md:text-xl text-base line-clamp-1">
+              <h3 className="font-bold lg:text-2xl md:text-xl text-base line-clamp-1">
                 {item.title}
-              </h1>
+              </h3>
 
               <p
                 className="lg:text-xl lg:font-normal font-light text-sm line-clamp-2"
@@ -48,7 +49,10 @@ const RecentProjects = () => {
               </p>
 
               <div className="flex items-center justify-between mt-7 mb-3">
-                <div className="flex items-center">
+                <div
+                  className="flex items-center"
+                  aria-label="Technologies used"
+                >
                   {item.iconLists.map((icon, index) => (
                     <div
                       key={index}
@@ -56,28 +60,35 @@ const RecentProjects = () => {
                       style={{
                         transform: `translateX(-${5 * index + 2}px)`,
                       }}
+                      aria-hidden="true"
                     >
-                      <img src={icon} alt="icon5" className="p-2" />
+                      <img src={icon} alt="" className="p-2" />
                     </div>
                   ))}
                 </div>
 
-                <div className="flex justify-center items-center">
-                  <p
-                    className="flex lg:text-xl md:text-xs text-sm text-purple"
-                    // add an onclick to go to link
-                    onClick={() => window.open(item.link)}
-                  >
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex justify-center items-center group focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-2"
+                  aria-label={`Visit live site for ${item.title}`}
+                >
+                  <span className="flex lg:text-xl md:text-xs text-sm text-purple">
                     Check Live Site
-                  </p>
-                  <FaLocationArrow className="ms-3" color="#CBACF9" />
-                </div>
+                  </span>
+                  <FaLocationArrow
+                    className="ms-3"
+                    color="#CBACF9"
+                    aria-hidden="true"
+                  />
+                </a>
               </div>
             </PinContainer>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

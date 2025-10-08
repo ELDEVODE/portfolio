@@ -45,7 +45,9 @@ export const FloatingNav = ({
 
   return (
     <AnimatePresence mode="wait">
-      <motion.div
+      <motion.nav
+        role="navigation"
+        aria-label="Main navigation"
         initial={{
           opacity: 1,
           y: -100,
@@ -73,16 +75,28 @@ export const FloatingNav = ({
       >
         {navItems.map((navItem: any, idx: number) => (
           <Link
-            key={`link=${idx}`}
+            key={`nav-item-${idx}`}
             href={navItem.link}
+            aria-label={`Navigate to ${navItem.name} section`}
             className={cn(
-              "relative dark:text-neutral-50 items-center  flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
             )}
+            onKeyDown={(e) => {
+              // Add keyboard navigation support
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                window.location.href = navItem.link;
+              }
+            }}
           >
-            <span className="block sm:hidden">{navItem.icon}</span>
+            {navItem.icon && (
+              <span className="block sm:hidden" aria-hidden="true">
+                {navItem.icon}
+              </span>
+            )}
             {/* add !cursor-pointer */}
             {/* remove hidden sm:block for the mobile responsive */}
-            <span className=" text-sm !cursor-pointer">{navItem.name}</span>
+            <span className="text-sm !cursor-pointer">{navItem.name}</span>
           </Link>
         ))}
         {/* remove this login btn */}
@@ -90,7 +104,7 @@ export const FloatingNav = ({
           <span>Login</span>
           <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
         </button> */}
-      </motion.div>
+      </motion.nav>
     </AnimatePresence>
   );
 };
