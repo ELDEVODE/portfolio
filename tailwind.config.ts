@@ -26,7 +26,21 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        serif: ["var(--font-cormorant)", "Palatino", "Georgia", "serif"],
+        display: ["var(--font-cinzel)", "Palatino", "serif"],
+      },
       colors: {
+        paper: "#f3e6cf",
+        ink: {
+          DEFAULT: "#2a160f",
+          soft: "#4a3226",
+        },
+        gold: "#8a5a2b",
+        oxide: "#8a5a2b",
+        wash: "#e7d7bc",
+        rule: "#cbb892",
+        meta: "#7a614c",
         black: {
           DEFAULT: "#000",
           100: "#000319",

@@ -1,22 +1,38 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Cinzel, Cormorant_Garamond } from "next/font/google";
 
 import "./globals.css";
 import { ThemeProvider } from "./provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  adjustFontFallback: false,
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-cinzel",
+  adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
-  title: "El-Praise's Portfolio",
-  description: "Fullstack developer portfolio showcasing projects and skills",
-  applicationName: "El-Praise's Portfolio",
-  authors: [{ name: "El-Praise" }],
-  keywords: ["portfolio", "developer", "fullstack", "web development"],
+  title: "El-Praise Ayo — Software Engineer",
+  description:
+    "Software engineer specializing in building scalable software applications.",
+  applicationName: "El-Praise Ayo",
+  authors: [{ name: "El-Praise Ayo" }],
+  keywords: ["portfolio", "software engineer", "fullstack", "rust", "react"],
   robots: "index, follow",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f3e6cf",
 };
 
 export default function RootLayout({
@@ -28,9 +44,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/me.jpeg" sizes="any" />
-        <meta name="theme-color" content="#000000" />
       </head>
-      <body className={inter.className}>
+      <body className={`${cormorant.className} ${cormorant.variable} ${cinzel.variable}`}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-[6000] focus:p-4 focus:bg-black focus:text-white focus:m-4 focus:rounded"
@@ -39,8 +54,9 @@ export default function RootLayout({
         </a>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
+          forcedTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           {children}

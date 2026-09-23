@@ -1,7 +1,14 @@
 import React from "react";
 
-import { workExperience } from "@/data";
 import { Button } from "./ui/MovingBorders";
+
+const workExperience: {
+  id: number;
+  title: string;
+  desc: string;
+  className: string;
+  thumbnail: string;
+}[] = [];
 
 const Experience = () => {
   return (

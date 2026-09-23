@@ -2,8 +2,15 @@
 
 import React from "react";
 
-import { companies, testimonials } from "@/data";
 import { InfiniteMovingCards } from "./ui/InfiniteCards";
+
+const testimonials: { quote: string; name: string; title: string }[] = [];
+const companies: {
+  id: number;
+  name: string;
+  img: string;
+  nameImg: string;
+}[] = [];
 
 const Clients = () => {
   return (
