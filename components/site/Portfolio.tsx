@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 import {
@@ -12,7 +11,7 @@ import {
 
 import { ExperienceList } from "./ExperienceList";
 import { NameLockup } from "./NameLockup";
-import { ease, Reveal } from "./motion";
+import { Reveal } from "./motion";
 import { Fleuron } from "./Ornament";
 import { SelectedWork } from "./SelectedWork";
 import { Sidebar } from "./Sidebar";
@@ -55,46 +54,19 @@ function useActiveSection(ids: string[]) {
 }
 
 function SectionHeading({ index, title, id }: { index: string; title: string; id: string }) {
-  const reduce = useReducedMotion();
-
   return (
-    <div className="mb-8 flex items-center gap-4">
-      <motion.span
-        className="font-display text-[11px] tracking-[0.28em] text-gold"
-        initial={reduce ? false : { opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, ease }}
-      >
+    <Reveal className="mb-8 flex items-center gap-4">
+      <span className="font-display text-[11px] tracking-[0.28em] text-gold">
         {index}
-      </motion.span>
-      <motion.h2
-        id={id}
-        className="font-serif text-4xl italic leading-none text-ink"
-        initial={reduce ? false : { opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease }}
-      >
+      </span>
+      <h2 id={id} className="font-serif text-4xl italic leading-none text-ink">
         {title}
-      </motion.h2>
-      <motion.span
-        className="h-px flex-1 origin-left bg-gold/40"
-        initial={reduce ? false : { scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.9, ease, delay: 0.1 }}
-      />
-      <motion.span
-        className="hidden sm:block"
-        initial={reduce ? false : { opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.35 }}
-      >
+      </h2>
+      <span className="draw h-px flex-1 bg-gold/40" />
+      <span className="hidden sm:block">
         <Fleuron />
-      </motion.span>
-    </div>
+      </span>
+    </Reveal>
   );
 }
 

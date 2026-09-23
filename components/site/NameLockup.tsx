@@ -1,53 +1,32 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
-import { ease } from "./motion";
-
-const container = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 14 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
-};
-
 export function NameLockup() {
-  const reduce = useReducedMotion();
-
   return (
-    <motion.div
-      initial={reduce ? false : "hidden"}
-      animate="show"
-      variants={container}
-    >
-      <motion.p
-        variants={item}
-        className="font-display text-[10px] tracking-[0.42em] text-gold"
+    <div>
+      <p
+        className="rise font-display text-[10px] tracking-[0.42em] text-gold"
+        style={{ animationDelay: "40ms" }}
       >
         ELDEVODE
-      </motion.p>
-      <motion.h1
-        variants={item}
-        className="mt-4 font-serif text-[3.1rem] font-medium italic leading-[0.9] text-ink sm:text-6xl"
+      </p>
+      <h1
+        className="rise mt-4 font-serif text-[3.1rem] font-medium italic leading-[0.9] text-ink sm:text-6xl"
+        style={{ animationDelay: "140ms" }}
       >
         El-Praise
         <br />
         Ayo
-      </motion.h1>
-      <motion.p variants={item} className="mt-4 font-serif text-xl italic text-ink-soft">
+      </h1>
+      <p
+        className="rise mt-4 font-serif text-xl italic text-ink-soft"
+        style={{ animationDelay: "260ms" }}
+      >
         Software Engineer
-      </motion.p>
-      <motion.p
-        variants={item}
-        className="mt-1 font-display text-[11px] tracking-[0.18em] text-meta"
+      </p>
+      <p
+        className="rise mt-1 font-display text-[11px] tracking-[0.18em] text-meta"
+        style={{ animationDelay: "360ms" }}
       >
         Abuja, Nigeria
-      </motion.p>
-    </motion.div>
+      </p>
+    </div>
   );
 }

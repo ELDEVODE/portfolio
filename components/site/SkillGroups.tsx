@@ -1,10 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { skillGroups, type Skill, type SkillLevel } from "@/data";
 
-import { skillGroups, type SkillLevel } from "@/data";
-
-import { ease } from "./motion";
+import { useReveal } from "./motion";
 
 const filled: Record<SkillLevel, number> = {
   Advanced: 3,
@@ -32,20 +30,29 @@ function LevelMark({ level }: { level: SkillLevel }) {
   );
 }
 
-export function SkillGroups() {
-  const reduce = useReducedMotion();
+function SkillRow({ skill, index }: { skill: Skill; index: number }) {
+  const { ref, className } = useReveal<HTMLLIElement>();
 
   return (
+    <li
+      ref={ref}
+      style={{ transitionDelay: `${index * 35}ms` }}
+      className={`${className} flex items-start justify-between gap-4 py-3 transition-colors duration-300 hover:bg-wash/70`}
+    >
+      <div>
+        <p className="font-serif text-lg leading-tight text-ink">{skill.name}</p>
+        <p className="mt-0.5 text-[13px] text-meta">{skill.focus}</p>
+      </div>
+      <LevelMark level={skill.level} />
+    </li>
+  );
+}
+
+export function SkillGroups() {
+  return (
     <div className="mt-2 grid gap-10 md:grid-cols-2">
-      {skillGroups.map((group, groupIndex) => (
-        <motion.section
-          key={group.id}
-          aria-labelledby={`${group.id}-label`}
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.65, ease, delay: groupIndex * 0.06 }}
-        >
+      {skillGroups.map((group) => (
+        <section key={group.id} aria-labelledby={`${group.id}-label`}>
           <h3
             id={`${group.id}-label`}
             className="font-display text-[11px] tracking-[0.22em] text-gold"
@@ -53,24 +60,11 @@ export function SkillGroups() {
             {group.label}
           </h3>
           <ul className="mt-4 divide-y divide-rule">
-            {group.skills.map((skill, skillIndex) => (
-              <motion.li
-                key={skill.name}
-                className="flex items-start justify-between gap-4 py-3 transition-colors duration-300 hover:bg-wash/70"
-                initial={reduce ? false : { opacity: 0, x: -8 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, ease, delay: skillIndex * 0.03 }}
-              >
-                <div>
-                  <p className="font-serif text-lg leading-tight text-ink">{skill.name}</p>
-                  <p className="mt-0.5 text-[13px] text-meta">{skill.focus}</p>
-                </div>
-                <LevelMark level={skill.level} />
-              </motion.li>
+            {group.skills.map((skill, index) => (
+              <SkillRow key={skill.name} skill={skill} index={index} />
             ))}
           </ul>
-        </motion.section>
+        </section>
       ))}
     </div>
   );

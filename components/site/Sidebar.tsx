@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 import { contact, navItems } from "@/data";
 
 import { NameLockup } from "./NameLockup";
@@ -52,22 +50,13 @@ export function Sidebar({ active }: SidebarProps) {
                     aria-current={isActive ? "true" : undefined}
                     className="group flex items-center gap-3 py-1.5"
                   >
-                    <span className="relative h-px w-8">
-                      <span
-                        className={`absolute inset-y-0 left-0 h-px transition-all duration-300 ${
-                          isActive
-                            ? "w-8 bg-transparent"
-                            : "w-4 bg-rule group-hover:w-8 group-hover:bg-ink"
-                        }`}
-                      />
-                      {isActive ? (
-                        <motion.span
-                          layoutId="nav-mark"
-                          className="absolute inset-y-0 left-0 h-px w-8 bg-gold"
-                          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                        />
-                      ) : null}
-                    </span>
+                    <span
+                      className={`h-px transition-all duration-500 ease-out ${
+                        isActive
+                          ? "w-8 bg-gold"
+                          : "w-4 bg-rule group-hover:w-8 group-hover:bg-ink"
+                      }`}
+                    />
                     <span
                       className={`font-display text-[11px] uppercase tracking-[0.18em] transition-colors duration-300 ${
                         isActive

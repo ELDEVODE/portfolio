@@ -1,40 +1,28 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-
-import { projects } from "@/data";
+import { projects, type Project } from "@/data";
 
 import { MothtypeFigure, TunerFigure } from "./Figures";
-import { ease } from "./motion";
+import { useReveal } from "./motion";
 
 const figures = {
   tuner: TunerFigure,
   mothtype: MothtypeFigure,
 };
 
-export function SelectedWork() {
-  const reduce = useReducedMotion();
+function WorkPanel({ project, index }: { project: Project; index: number }) {
+  const { ref, className } = useReveal<HTMLElement>();
+  const Figure = figures[project.figure];
 
   return (
-    <div className="mt-2 space-y-12">
-      {projects.map((project, index) => {
-        const Figure = figures[project.figure];
-        return (
-          <motion.article
-            key={project.id}
-            className="group grid items-start gap-6 md:grid-cols-[220px_minmax(0,1fr)] md:gap-10"
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, ease, delay: index * 0.08 }}
+          <article
+            ref={ref}
+            style={{ transitionDelay: `${index * 80}ms` }}
+            className={`${className} group grid items-start gap-6 md:grid-cols-[220px_minmax(0,1fr)] md:gap-10`}
           >
-            <motion.div
-              className="will-change-transform"
-              whileHover={reduce ? undefined : { x: 6 }}
-              transition={{ duration: 0.55, ease }}
-            >
+            <div className="transition-transform duration-500 ease-out group-hover:translate-x-1.5">
               <Figure />
-            </motion.div>
+            </div>
             <div>
               <h3 className="font-serif text-4xl italic leading-none text-ink">
                 {project.title}
@@ -62,9 +50,16 @@ export function SelectedWork() {
                 ))}
               </ul>
             </div>
-          </motion.article>
-        );
-      })}
+          </article>
+  );
+}
+
+export function SelectedWork() {
+  return (
+    <div className="mt-2 space-y-12">
+      {projects.map((project, index) => (
+        <WorkPanel key={project.id} project={project} index={index} />
+      ))}
     </div>
   );
 }

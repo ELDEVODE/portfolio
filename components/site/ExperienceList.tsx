@@ -1,40 +1,28 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { experience, type ExperienceItem } from "@/data";
 
-import { experience } from "@/data";
+import { useReveal } from "./motion";
 
-import { ease } from "./motion";
-
-const list = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.07 } },
-};
-
-const row = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease } },
-};
-
-export function ExperienceList() {
-  const reduce = useReducedMotion();
+function ExperienceRow({
+  job,
+  index,
+  isLast,
+}: {
+  job: ExperienceItem;
+  index: number;
+  isLast: boolean;
+}) {
+  const { ref, className } = useReveal<HTMLLIElement>();
 
   return (
-    <motion.ol
-      className="mt-2"
-      initial={reduce ? false : "hidden"}
-      whileInView="show"
-      viewport={{ once: true, margin: "-40px" }}
-      variants={list}
-    >
-      {experience.map((job, index) => (
-        <motion.li
-          key={job.id}
+        <li
+          ref={ref}
           tabIndex={0}
-          variants={row}
-          className="group relative py-1 outline-none focus-visible:ring-1 focus-visible:ring-gold"
+          style={{ transitionDelay: `${index * 55}ms` }}
+          className={`${className} group relative py-1 outline-none focus-visible:ring-1 focus-visible:ring-gold`}
         >
-          {index < experience.length - 1 ? (
+          {!isLast ? (
             <span
               aria-hidden
               className="absolute bottom-[-0.35rem] left-[3px] top-7 w-px bg-rule"
@@ -89,8 +77,21 @@ export function ExperienceList() {
               </div>
             </div>
           </div>
-        </motion.li>
+        </li>
+  );
+}
+
+export function ExperienceList() {
+  return (
+    <ol className="mt-2">
+      {experience.map((job, index) => (
+        <ExperienceRow
+          key={job.id}
+          job={job}
+          index={index}
+          isLast={index === experience.length - 1}
+        />
       ))}
-    </motion.ol>
+    </ol>
   );
 }
