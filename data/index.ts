@@ -49,20 +49,6 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    id: "dfinity",
-    title: "ICP Blockchain Ambassador",
-    company: "DFINITY Foundation",
-    dates: "July 2024 – Present",
-    mode: "Remote · Sahara Region",
-    bullets: [
-      "Organized and led 15+ community events, including technical workshops and hackathons, attracting over 500 participants and fostering grassroots adoption of ICP's Rust-based smart contract ecosystem in emerging markets.",
-      "Delivered keynote presentations and hands-on onboarding sessions on ICP development, empowering novice and intermediate developers to deploy secure, scalable dApps using Rust, Motoko, and WebAssembly—resulting in a 40% increase in regional developer registrations.",
-      "Collaborated with global ICP ambassadors and DFINITY teams to curate educational content, including tutorials on zero-knowledge proofs and canister models, distributed via YouTube and GitHub to accelerate user onboarding and reduce entry barriers for blockchain innovation.",
-      "Drove user acquisition initiatives by integrating ICP tools into local tech meetups and university partnerships, onboarding 200+ new developers to the ecosystem and contributing to a 25% growth in active Sahara-based ICP projects.",
-      "Mentored emerging Web3 builders through one-on-one code reviews and project sprints, emphasizing Rust's safety features for decentralized applications, while gathering feedback to refine ICP's community resources and documentation.",
-    ],
-  },
-  {
     id: "nihub",
     title: "Software Engineer / Instructor",
     company: "NIHUB",
@@ -74,6 +60,20 @@ export const experience: ExperienceItem[] = [
       "Implemented Rust-based microservices for core backend logic, including real-time notification handling and API gateways, resulting in optimized resource utilization and zero runtime panics under load.",
       "Mentored and instructed students in modern web development as part of their Industrial Training, learning about front-end technologies to build robust, production-ready applications.",
       "Managed the full software lifecycle, including Rust crate selection and optimization, containerization with Docker, and deployment on company-hosted Linux VMs, while fostering best practices in code reviews and CI/CD pipelines tailored to Rust workflows.",
+    ],
+  },
+  {
+    id: "dfinity",
+    title: "ICP Blockchain Ambassador",
+    company: "DFINITY Foundation",
+    dates: "July 2024 – February 2026",
+    mode: "Remote · Sahara Region",
+    bullets: [
+      "Organized and led 15+ community events, including technical workshops and hackathons, attracting over 500 participants and fostering grassroots adoption of ICP's Rust-based smart contract ecosystem in emerging markets.",
+      "Delivered keynote presentations and hands-on onboarding sessions on ICP development, empowering novice and intermediate developers to deploy secure, scalable dApps using Rust, Motoko, and WebAssembly—resulting in a 40% increase in regional developer registrations.",
+      "Collaborated with global ICP ambassadors and DFINITY teams to curate educational content, including tutorials on zero-knowledge proofs and canister models, distributed via YouTube and GitHub to accelerate user onboarding and reduce entry barriers for blockchain innovation.",
+      "Drove user acquisition initiatives by integrating ICP tools into local tech meetups and university partnerships, onboarding 200+ new developers to the ecosystem and contributing to a 25% growth in active Sahara-based ICP projects.",
+      "Mentored emerging Web3 builders through one-on-one code reviews and project sprints, emphasizing Rust's safety features for decentralized applications, while gathering feedback to refine ICP's community resources and documentation.",
     ],
   },
   {
