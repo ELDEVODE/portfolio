@@ -19,6 +19,7 @@ export type ExperienceItem = {
 };
 
 export const experience: ExperienceItem[] = [
+  /*
   {
     id: "muveta",
     title: "Frontend Engineer",
@@ -33,6 +34,7 @@ export const experience: ExperienceItem[] = [
       "Engineering Excellence: Maintained CI/CD reliability by resolving critical strict-mode TypeScript build errors and shipped 50+ user stories within an Agile framework.",
     ],
   },
+  */
   {
     id: "xchangebox",
     title: "Fullstack Developer",
