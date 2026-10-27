@@ -10,9 +10,19 @@ export function useReveal<T extends HTMLElement>() {
     const element = ref.current;
     if (!element) return;
 
+    // Anything already level with or above the fold has been "read"
+    // already — on a deep link or a reload partway down the folio it
+    // would otherwise never intersect, and stay invisible for good.
+    if (element.getBoundingClientRect().top < window.innerHeight) {
+      setShown(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
+        // Intersecting, or already scrolled past — a hash jump can carry
+        // the page over an element without it ever being in view.
+        if (!entry.isIntersecting && entry.boundingClientRect.top > 0) return;
         setShown(true);
         observer.disconnect();
       },

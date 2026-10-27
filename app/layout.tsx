@@ -27,6 +27,12 @@ export const metadata: Metadata = {
   authors: [{ name: "El-Praise Ayo" }],
   keywords: ["portfolio", "software engineer", "fullstack", "rust", "react"],
   robots: "index, follow",
+  openGraph: {
+    title: "El-Praise Ayo — Software Engineer",
+    description:
+      "Software engineer specializing in building scalable software applications.",
+    type: "profile",
+  },
 };
 
 export const viewport: Viewport = {
@@ -48,14 +54,14 @@ export default function RootLayout({
       <body className={`${cormorant.className} ${cormorant.variable} ${cinzel.variable}`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-[6000] focus:p-4 focus:bg-black focus:text-white focus:m-4 focus:rounded"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-[6000] focus:m-4 focus:border focus:border-gold focus:bg-paper focus:p-4 focus:font-display focus:text-[11px] focus:tracking-[0.18em] focus:text-ink"
         >
           Skip to main content
         </a>
         <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          forcedTheme="light"
+          attribute="data-theme"
+          themes={["day", "night"]}
+          defaultTheme="day"
           enableSystem={false}
           disableTransitionOnChange
         >

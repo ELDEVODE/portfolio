@@ -2,123 +2,434 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+/* ---------------------------------------------------------------
+   Tokens. Every colour in the site resolves through these, so the
+   night theme is a single block override and nothing downstream
+   needs to know which theme is lit.
+   --------------------------------------------------------------- */
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+:root {
+  --paper-rgb: 243 230 207;
+  --ink-rgb: 42 22 15;
+  --ink-soft-rgb: 74 50 38;
+  --gold-rgb: 138 90 43;
+  --wash-rgb: 231 215 188;
+  --rule-rgb: 203 184 146;
+  --meta-rgb: 122 97 76;
+  --sinopia-rgb: 110 44 40;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+  /* Convenience aliases for plain CSS and SVG fills. Tailwind reads the
+     channel triplets above so that its /opacity modifiers work. */
+  --paper: rgb(var(--paper-rgb));
+  --ink: rgb(var(--ink-rgb));
+  --ink-soft: rgb(var(--ink-soft-rgb));
+  --gold: rgb(var(--gold-rgb));
+  --wash: rgb(var(--wash-rgb));
+  --rule: rgb(var(--rule-rgb));
+  --meta: rgb(var(--meta-rgb));
+  --sinopia: rgb(var(--sinopia-rgb));
+  --gold-leaf-1: #8a5a2b;
+  --gold-leaf-2: #c9a227;
+  --gold-leaf-3: #7a4a1f;
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+  /* grain + vignette strength, so night can dial them separately */
+  --grain-opacity: 0.05;
+  --vignette: rgba(90, 48, 18, 0.09);
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+  /* the candle. Centred until a pointer says otherwise. */
+  --candle-x: 50%;
+  --candle-y: 38%;
+  --candle-reach: 34rem;
+  --candle-blend: soft-light;
+  --candle-core: rgba(255, 238, 196, 0.5);
+  --candle-mid: rgba(226, 179, 92, 0.22);
+  --candle-edge: rgba(26, 14, 8, 0.1);
+}
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+[data-theme="night"] {
+  /* Not "dark mode" — vellum read by candlelight. */
+  --paper-rgb: 28 20 16;
+  --ink-rgb: 232 214 180;
+  --ink-soft-rgb: 200 179 145;
+  --gold-rgb: 201 162 39;
+  --wash-rgb: 42 31 24;
+  --rule-rgb: 78 60 42;
+  --meta-rgb: 156 132 104;
+  --sinopia-rgb: 178 74 63;
+  --gold-leaf-1: #a37a26;
+  --gold-leaf-2: #f0d375;
+  --gold-leaf-3: #8a5a2b;
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+  --grain-opacity: 0.08;
+  --vignette: rgba(0, 0, 0, 0.3);
+  --candle-reach: 46rem;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-  }
+  --candle-blend: screen;
+  --candle-core: rgba(255, 226, 158, 0.34);
+  --candle-mid: rgba(214, 155, 70, 0.17);
+  --candle-edge: rgba(0, 0, 0, 0);
 }
 
 @layer base {
   * {
-    @apply border-border !scroll-smooth;
+    @apply !scroll-smooth;
   }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--paper);
+    color: var(--ink);
+    background-image: radial-gradient(
+      ellipse at center,
+      transparent 45%,
+      var(--vignette) 100%
+    );
+    /* viewport-relative, so a long page is not dark at both ends */
+    background-attachment: fixed;
+    transition:
+      background-color 0.6s ease,
+      color 0.6s ease;
   }
+
   button {
     @apply active:outline-none;
   }
+
+  ::selection {
+    background: var(--sinopia);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
 }
 
-body {
-  background-color: #f3e6cf;
-  color: #2a160f;
-  background-image: radial-gradient(
-    ellipse at center,
-    transparent 45%,
-    rgba(90, 48, 18, 0.09) 100%
+/* ---------------------------------------------------------------
+   The scrollbar, ruled like the rest of the folio: a hairline track
+   on the paper and a gold thumb, themed with everything else.
+   --------------------------------------------------------------- */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--gold-rgb) / 0.55) rgb(var(--wash-rgb) / 0.45);
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(var(--wash-rgb) / 0.4);
+  border-left: 1px solid rgb(var(--gold-rgb) / 0.22);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--gold-rgb) / 0.45);
+  /* inset so the thumb reads as a slim bar, not a block */
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--gold-rgb) / 0.75);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+/* ---------------------------------------------------------------
+   Paper. A turbulence filter as a data URI (no asset, no request)
+   for the tooth of the sheet, plus laid chain lines over it.
+   --------------------------------------------------------------- */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+[data-theme="night"] body::before,
+body[data-theme="night"]::before {
+  mix-blend-mode: screen;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 23px,
+    rgba(138, 90, 43, 0.045) 23px 24px
   );
 }
 
-::selection {
-  background: #6e2c28;
-  color: #f3e6cf;
+/* Everything the page draws sits above the paper layers. */
+body > * {
+  position: relative;
+  z-index: 1;
 }
+
+/* ---------------------------------------------------------------
+   Candlelight
+   --------------------------------------------------------------- */
+
+.candlelight {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  mix-blend-mode: var(--candle-blend);
+  background: radial-gradient(
+    circle var(--candle-reach) at var(--candle-x) var(--candle-y),
+    var(--candle-core) 0%,
+    var(--candle-mid) 36%,
+    var(--candle-edge) 72%,
+    var(--candle-edge) 100%
+  );
+  animation: flicker 4.2s ease-in-out infinite;
+  will-change: background;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  18% {
+    opacity: 0.94;
+  }
+  34% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.9;
+  }
+  61% {
+    opacity: 0.98;
+  }
+  79% {
+    opacity: 0.93;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1.5deg) scaleY(1);
+  }
+  50% {
+    transform: rotate(1.5deg) scaleY(1.06);
+  }
+}
+
+.flame {
+  transform-origin: 50% 100%;
+  animation: sway 2.6s ease-in-out infinite;
+}
+
+@keyframes smoke {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 24;
+  }
+  30% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: -24;
+  }
+}
+
+.smoke {
+  stroke-dasharray: 24;
+  animation: smoke 3.4s ease-out infinite;
+}
+
+/* ---------------------------------------------------------------
+   The fresco. The ink layer is masked by a circle at the cursor so the
+   sinopia underdrawing shows through where the plaster has been rubbed
+   back. --wipe-x / --wipe-y come from FrescoHero; with no pointer they
+   are unset, the fallback puts the hole far outside the box, and the
+   finished lettering stands whole.
+   --------------------------------------------------------------- */
+
+.fresco-chalk {
+  color: transparent;
+  -webkit-text-stroke: 0.7px var(--sinopia);
+  opacity: 0.85;
+}
+
+.fresco-ink {
+  --wipe-r: 7rem;
+  -webkit-mask-image: radial-gradient(
+    circle var(--wipe-r) at var(--wipe-x, -200%) var(--wipe-y, -200%),
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 42%,
+    #000 78%
+  );
+  mask-image: radial-gradient(
+    circle var(--wipe-r) at var(--wipe-x, -200%) var(--wipe-y, -200%),
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 42%,
+    #000 78%
+  );
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .fresco-ink {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .fresco-chalk {
+    display: none;
+  }
+}
+
+/* The sidebar scrolls within itself when a short window demands it;
+   the bar itself would break the illusion of a margin. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* A quill nib for the cursor over the folio's text column. */
+@media (pointer: fine) {
+  .quill {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M23 2C16 4 9 9 5 17l-1.6 4.6a.7.7 0 0 0 .9.9L9 21c8-4 13-11 14-19Z' fill='%232a160f' stroke='%23f3e6cf' stroke-width='1.1'/%3E%3Cpath d='M3.4 22.6 9 17' stroke='%23f3e6cf' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E")
+      3 23, text;
+  }
+
+  .quill a,
+  .quill button,
+  .quill [tabindex] {
+    cursor: inherit;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Gold leaf. Used sparingly: section numerals and the monogram.
+   --------------------------------------------------------------- */
+
+.gold-leaf {
+  background-image: linear-gradient(
+    105deg,
+    var(--gold-leaf-1) 0%,
+    var(--gold-leaf-2) 38%,
+    #fff6dd 46%,
+    var(--gold-leaf-2) 54%,
+    var(--gold-leaf-3) 100%
+  );
+  background-size: 260% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gold-leaf:hover,
+.group:hover .gold-leaf,
+a:hover .gold-leaf {
+  background-position: 100% 0;
+}
+
+/* ---------------------------------------------------------------
+   The opening. The title board turns away on its spine, with a
+   shadow sweeping across the leaf as it lifts.
+   --------------------------------------------------------------- */
+
+.board {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  box-shadow: 2px 0 60px rgb(var(--ink-rgb) / 0.18);
+  transform: rotateY(0deg);
+}
+
+.board::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgb(var(--ink-rgb) / 0) 40%,
+    rgb(var(--ink-rgb) / 0.22) 100%
+  );
+  opacity: 0;
+  transition: opacity 1.1s ease-in;
+}
+
+.board-turning {
+  animation: leaf-turn 1.25s cubic-bezier(0.62, 0.02, 0.3, 1) forwards;
+}
+
+.board-turning::after {
+  opacity: 1;
+}
+
+@keyframes leaf-turn {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-108deg);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Entrances. Reveals now wick into the paper rather than slide.
+   --------------------------------------------------------------- */
 
 @keyframes rise {
   from {
     opacity: 0;
     transform: translateY(12px);
+    filter: blur(3px);
   }
   to {
     opacity: 1;
     transform: none;
+    filter: blur(0);
   }
 }
 
 .rise {
-  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(10px);
+  filter: blur(3px);
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-shown {
   opacity: 1;
   transform: none;
+  filter: blur(0);
 }
 
 .draw {
@@ -130,6 +441,111 @@ body {
 .reveal.is-shown .draw,
 .draw.is-shown {
   transform: scaleX(1);
+}
+
+/* Ink blot left by a nav click. */
+@keyframes blot {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+  }
+  60% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.9) rotate(14deg);
+  }
+}
+
+.blot {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  animation: blot 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Wax seal breaking open. */
+@keyframes crack-left {
+  to {
+    transform: translate(-7px, 2px) rotate(-8deg);
+  }
+}
+
+@keyframes crack-right {
+  to {
+    transform: translate(7px, 3px) rotate(9deg);
+  }
+}
+
+@keyframes crumb {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--crumb-x, 10px), var(--crumb-y, 14px)) scale(1);
+  }
+}
+
+.seal-half-left,
+.seal-half-right {
+  transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.seal-open .seal-half-left {
+  transform: translate(-7px, 2px) rotate(-8deg);
+}
+
+.seal-open .seal-half-right {
+  transform: translate(7px, 3px) rotate(9deg);
+}
+
+.seal-open .seal-crumb {
+  animation: crumb 0.9s ease-out forwards;
+}
+
+/* ---------------------------------------------------------------
+   Scroll choreography — progressive enhancement only. Browsers
+   without scroll-driven animations keep the observer behaviour.
+   --------------------------------------------------------------- */
+
+@supports (animation-timeline: view()) {
+  @keyframes ink-rule {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes ink-spine {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  .rule-scroll {
+    transform-origin: left center;
+    animation: ink-rule linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 90%;
+  }
+
+  .spine-scroll {
+    transform-origin: top center;
+    animation: ink-spine linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 65%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -144,9 +560,19 @@ body {
 
   .rise,
   .reveal,
-  .draw {
+  .draw,
+  .rule-scroll,
+  .spine-scroll,
+  .flame,
+  .smoke,
+  .candlelight {
     opacity: 1;
     transform: none;
+    filter: none;
     animation: none;
+  }
+
+  .blot {
+    display: none;
   }
 }

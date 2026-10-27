@@ -1,5 +1,18 @@
-export const profile =
-  "Software engineer specializing in building scalable software applications. I focus on creating robust systems that solve real problems, with particular interest in emerging technologies. I enjoy collaborating with teams, whether brainstorming with senior engineers or mentoring junior developers, to ship high-quality software that delivers tangible results. I'm committed to continuous learning and bringing practical, efficient solutions to complex technical challenges.";
+export const headline = "Software Engineer";
+
+export type Profile = {
+  lede: string;
+  body: string[];
+};
+
+export const profile: Profile = {
+  lede:
+    "Software engineer specializing in building scalable software applications. I focus on creating robust systems that solve real problems, with particular interest in emerging technologies.",
+  body: [
+    "I enjoy collaborating with teams, whether brainstorming with senior engineers or mentoring junior developers, to ship high-quality software that delivers tangible results.",
+    "I'm committed to continuous learning and bringing practical, efficient solutions to complex technical challenges.",
+  ],
+};
 
 export const navItems = [
   { name: "About", link: "#about" },
@@ -7,7 +20,13 @@ export const navItems = [
   { name: "Work", link: "#work" },
   { name: "Skills", link: "#skills" },
   { name: "Education", link: "#education" },
+  { name: "Contact", link: "#contact" },
 ];
+
+export type Metric = {
+  value: string;
+  label: string;
+};
 
 export type ExperienceItem = {
   id: string;
@@ -15,6 +34,8 @@ export type ExperienceItem = {
   company: string;
   dates?: string;
   mode?: string;
+  /** Rendered as marginalia in the gutter beside the entry. */
+  metrics?: Metric[];
   bullets: string[];
 };
 
@@ -41,6 +62,10 @@ export const experience: ExperienceItem[] = [
     company: "Xchangebox",
     dates: "November 2025 – Present",
     mode: "Hybrid",
+    metrics: [
+      { value: "P&L", label: "Excel and PDF statement engines" },
+      { value: "N+1", label: "lookups replaced with batch queries" },
+    ],
     bullets: [
       "Frontend Development: Engineered interactive JavaScript UI components—including multi-step wizards, dynamic modals, and server-side DataTables with advanced filtering—for high-volume financial modules.",
       "Backend & API Integration: Built and integrated RESTful APIs using Python and Django REST Framework to drive complex operations like loan booking, KYC updates, and bulk account creation.",
@@ -56,6 +81,10 @@ export const experience: ExperienceItem[] = [
     company: "NIHUB",
     dates: "May 2025 – May 2026",
     mode: "Hybrid",
+    metrics: [
+      { value: "0", label: "runtime panics under load" },
+      { value: "Tokio", label: "async, fault-tolerant event pipeline" },
+    ],
     bullets: [
       "Developed and deployed full-stack web applications using Rust for secure, high-performance backends, integrated with React, Next.js, and Express frontends within a Dockerized Linux environment, ensuring seamless scalability and memory safety.",
       "Architected and built an internal event management system to streamline company operations, leveraging Rust's ownership model and async runtime (Tokio) for fault-tolerant, concurrent processing of event data—taking full ownership from ideation through production deployment.",
@@ -70,6 +99,12 @@ export const experience: ExperienceItem[] = [
     company: "DFINITY Foundation",
     dates: "July 2024 – February 2026",
     mode: "Remote · Sahara Region",
+    metrics: [
+      { value: "15+", label: "community events led" },
+      { value: "500+", label: "workshop participants" },
+      { value: "200+", label: "developers onboarded" },
+      { value: "40%", label: "rise in regional registrations" },
+    ],
     bullets: [
       "Organized and led 15+ community events, including technical workshops and hackathons, attracting over 500 participants and fostering grassroots adoption of ICP's Rust-based smart contract ecosystem in emerging markets.",
       "Delivered keynote presentations and hands-on onboarding sessions on ICP development, empowering novice and intermediate developers to deploy secure, scalable dApps using Rust, Motoko, and WebAssembly—resulting in a 40% increase in regional developer registrations.",
@@ -83,6 +118,7 @@ export const experience: ExperienceItem[] = [
     title: "Fullstack Developer",
     company: "A&D Technology Consulting",
     dates: "January 2025 – September 2025",
+    metrics: [{ value: "35%", label: "faster deployments" }],
     bullets: [
       "Built entire frontends from the ground up for client-facing web applications using React and Next.js, delivering responsive, intuitive interfaces that enhanced user engagement for multiple portfolio companies in e-commerce and SaaS sectors.",
       "Collaborated closely with management and cross-functional client teams to align site functionality with evolving business requirements, iterating on features through agile sprints to support scalable growth for diverse industry clients.",
@@ -96,6 +132,11 @@ export const experience: ExperienceItem[] = [
     title: "Fullstack Developer",
     company: "Fluxnudge — ICP Hub Sahara",
     dates: "November 2024 – January 2025",
+    metrics: [
+      { value: "40%", label: "faster API responses" },
+      { value: "60%", label: "fewer production bugs" },
+      { value: "25%", label: "faster server startup on Bun" },
+    ],
     bullets: [
       "Architected and implemented robust backend systems using Node.js with Bun runtime and TypeScript, resulting in a 40% improvement in API response times.",
       "Designed and optimized MongoDB database schemas and queries that can scale to support a lot of daily active users.",
@@ -162,6 +203,9 @@ export const projects: Project[] = [
 
 export type SkillLevel = "Advanced" | "Intermediate" | "Competent";
 
+/** Weakest to strongest. The level meter and the astrolabe share this. */
+export const levelOrder: SkillLevel[] = ["Competent", "Intermediate", "Advanced"];
+
 export type Skill = {
   name: string;
   level: SkillLevel;
@@ -221,14 +265,34 @@ export const skillGroups: SkillGroup[] = [
   },
 ];
 
-export const education = {
+export type Education = {
+  degree: string;
+  school: string;
+  dates: string;
+  location: string;
+};
+
+export const education: Education = {
   degree: "Civil Engineering",
   school: "Federal University of Technology, Minna",
   dates: "2019 – 2025",
   location: "Minna, Nigeria",
 };
 
-export const contact = {
+export type ContactLink = {
+  label: string;
+  href: string;
+};
+
+export type Contact = {
+  email: string;
+  phone: string;
+  phoneDisplay: string;
+  location: string;
+  links: ContactLink[];
+};
+
+export const contact: Contact = {
   email: "elpraise20@gmail.com",
   phone: "+2348117292451",
   phoneDisplay: "+234 811 729 2451",
@@ -244,16 +308,3 @@ export const contact = {
     },
   ],
 };
-
-export const socialMedia = [
-  {
-    id: 2,
-    img: "/twit.svg",
-    link: "https://twitter.com/Eldevode_",
-  },
-  {
-    id: 3,
-    img: "/link.svg",
-    link: "https://www.linkedin.com/in/el-praise-ayo-b17b80228/",
-  },
-];
