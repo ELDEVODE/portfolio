@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Cinzel, Cormorant_Garamond } from "next/font/google";
 
+import { site, siteUrl } from "@/lib/site";
+
 import "./globals.css";
 import { ThemeProvider } from "./provider";
 
@@ -20,25 +22,73 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
-  title: "El-Praise Ayo — Software Engineer",
-  description:
-    "Software engineer specializing in building scalable software applications.",
-  applicationName: "El-Praise Ayo",
-  authors: [{ name: "El-Praise Ayo" }],
-  keywords: ["portfolio", "software engineer", "fullstack", "rust", "react"],
-  robots: "index, follow",
-  openGraph: {
-    title: "El-Praise Ayo — Software Engineer",
-    description:
-      "Software engineer specializing in building scalable software applications.",
-    type: "profile",
+  // Everything relative below resolves against this, including the
+  // generated opengraph-image — without it those URLs ship relative and
+  // most scrapers quietly drop the card.
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: site.title,
+    template: `%s — ${site.name}`,
   },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: siteUrl }],
+  creator: site.name,
+  publisher: site.name,
+  keywords: [
+    "El-Praise Ayo",
+    "Eldevode",
+    "software engineer",
+    "fullstack developer",
+    "Rust developer",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Abuja",
+    "Nigeria",
+    "portfolio",
+  ],
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "profile",
+    siteName: site.name,
+    title: site.title,
+    description: site.description,
+    url: "/",
+    locale: site.locale,
+    firstName: "El-Praise",
+    lastName: "Ayo",
+    username: "Eldevode",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.title,
+    description: site.description,
+    creator: site.twitter,
+    site: site.twitter,
+  },
+  category: "technology",
+  formatDetection: { telephone: false, address: false, email: false },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f3e6cf",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3e6cf" },
+    { media: "(prefers-color-scheme: dark)", color: "#1c1410" },
+  ],
 };
 
 export default function RootLayout({
@@ -48,9 +98,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/me.jpeg" sizes="any" />
-      </head>
       <body className={`${cormorant.className} ${cormorant.variable} ${cinzel.variable}`}>
         <a
           href="#main-content"
